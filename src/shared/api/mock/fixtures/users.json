@@ -1,0 +1,22 @@
+[
+    {
+        "id": "user_1",
+        "orgId": "org_1",
+        "email": "john@cambridgeprofab.com",
+        "displayName": "John Davidson",
+        "orgRole": "org_admin",
+        "joinedAt": "2024-01-15T09:00:00Z",
+        "isActive": true,
+        "preferences": {
+            "theme": "dark",
+            "sidebarExpanded": true,
+            "aiPanelWidth": 320,
+            "pdfPanelWidth": 400,
+            "reviewPanelWidth": 320,
+            "defaultUnitSystem": "imperial",
+            "pdfDefaultZoom": 1.2,
+            "density": "comfortable",
+            "fontSize": "md"
+        }
+    }
+]

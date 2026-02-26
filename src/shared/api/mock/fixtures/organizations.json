@@ -1,0 +1,16 @@
+[
+    {
+        "id": "org_1",
+        "name": "Cambridge Precision Fabrication",
+        "slug": "cambridge-profab",
+        "logoUrl": "https://placehold.co/200x200/0A0E1A/00D4FF?text=CPF",
+        "orgColor": "#00D4FF",
+        "industry": "Mechanical Fabrication",
+        "subscriptionTier": "professional",
+        "featureOverrides": {
+            "ai_estimator": true,
+            "pdf_intelligence": true
+        },
+        "createdAt": "2024-01-15T09:00:00Z"
+    }
+]

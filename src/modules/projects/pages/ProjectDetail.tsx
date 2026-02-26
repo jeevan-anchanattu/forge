@@ -4,6 +4,7 @@ import api from '@/shared/api';
 import { Card } from '@/shared/components/Card';
 import { Button } from '@/shared/components/Button';
 import { ArrowLeft, User as UserIcon, Phone, Mail } from 'lucide-react';
+import { ProjectStatus } from '@/shared/types';
 import { StatusFlow } from '../components/StatusFlow';
 import { VisualViewer } from '../components/VisualViewer';
 import { ManufacturingTracker } from '../components/ManufacturingTracker';
@@ -34,6 +35,25 @@ export const ProjectDetail: React.FC = () => {
         if (id) fetchProject();
     }, [id]);
 
+    const STATUS_ORDER: ProjectStatus[] = [
+        'planning','active','quotation_review','quotation_approved',
+        'plan_started','plan_complete','manufacturing_review',
+        'manufacturing_progress','manufacturing_qa_review',
+        'manufacturing_complete','manufacturing_signoff',
+        'delivered','feedback','retrospective','archived'
+    ];
+
+    const showManufacturing =
+        project &&
+        STATUS_ORDER.indexOf(project.status) >= STATUS_ORDER.indexOf('manufacturing_review');
+
+    // ensure activeTab stays valid if manufacturing section becomes unavailable
+    React.useEffect(() => {
+        if (!showManufacturing && activeTab === 'manufacturing') {
+            setActiveTab('overview');
+        }
+    }, [showManufacturing, activeTab]);
+
     if (loading) {
         return <div className="p-8 text-center text-text-tertiary animate-pulse">Scanning Project Data...</div>;
     }
@@ -42,13 +62,14 @@ export const ProjectDetail: React.FC = () => {
         return <div className="p-8 text-center text-error">Project Not Found</div>;
     }
 
-    const primaryContact = project.contacts?.find((c: any) => c.isPrimary) || project.contacts?.[0];
+    const allContacts = project.contacts || project.clientJson || [];
+    const primaryContact = allContacts.find((c: any) => c.isPrimary) || allContacts[0];
 
     const tabs = [
         { id: 'overview', label: 'Overview' },
         { id: 'status', label: 'Status Flow' },
         { id: 'visuals', label: 'Visual Viewer' },
-        { id: 'manufacturing', label: 'Manufacturing' },
+        ...(showManufacturing ? [{ id: 'manufacturing', label: 'Manufacturing' }] : []),
         { id: 'attachments', label: 'Attachments' },
         { id: 'documents', label: '📁 Documents' },
     ];
@@ -116,7 +137,7 @@ export const ProjectDetail: React.FC = () => {
 
                 {activeTab === 'status' && <StatusFlow project={project} onUpdate={fetchProject} />}
                 {activeTab === 'visuals' && <VisualViewer project={project} />}
-                {activeTab === 'manufacturing' && <ManufacturingTracker project={project} />}
+                {activeTab === 'manufacturing' && <ManufacturingTracker project={project} onUpdate={fetchProject} />}
                 {activeTab === 'attachments' && <Attachments project={project} />}
                 {activeTab === 'documents' && <DocumentVault project={project} />}
             </div>

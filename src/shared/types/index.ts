@@ -147,7 +147,17 @@ export interface Project {
     visual3dUrl?: string;
     visualImages: string[];
     clientName?: string;
-    clientJson?: ClientContact[];
+    // NOTE: backend returns contacts array (used in UI) but spec refers to clientJson
+    contacts?: ClientContact[];
+    clientJson?: ClientContact[]; // legacy/spec field for contacts data
+    manufacturingTasks?: {
+        id: string;
+        title: string;
+        status: TaskStatus;
+        assignedTo?: string;
+        dueDate?: string;
+        remarks?: string;
+    }[];
     poNumber?: string;
     drawingReference?: string;
     startDate?: string;

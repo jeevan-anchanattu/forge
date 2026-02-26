@@ -159,6 +159,20 @@ DO NOT BUILD: Workbook engine, PDF viewer, or section cockpit.
 
 ---
 
+missing
+in the project details overview tab,
+
+Where is the option to add CLIENT CONTACTS (SPEC 14.1 — CLIENT INFORMATION section):
+
+Multiple contacts per project (array in clientJson)
+Fields: name, title, email, phone, address, isPrimary
+MANUFACTURING TRACKER (SPEC 14.8):
+
+Only visible when status >= manufacturing_review
+Kanban columns: To Do / In Progress / QA Hold / Done
+Shop floor view: simplified task cards with large status buttons
+
+
 ### PROMPT: Phase 3 — Workbook Engine & Section Cockpit
 
 ```

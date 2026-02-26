@@ -6,6 +6,7 @@ import { useForgeStore } from '@/shared/store';
 import api from '@/shared/api';
 import { Edit2, Check, X, Building2, User, Calendar, DollarSign, Activity, FileText } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { ClientContactsPanel } from './ClientContactsPanel';
 
 export const OverviewTab: React.FC<{ project: any, onUpdate: () => void }> = ({ project, onUpdate }) => {
     const { user } = useForgeStore();
@@ -13,6 +14,13 @@ export const OverviewTab: React.FC<{ project: any, onUpdate: () => void }> = ({ 
 
     const [isEditing, setIsEditing] = useState(false);
     const [saving, setSaving] = useState(false);
+
+    const [contacts, setContacts] = useState<any[]>(project.contacts || project.clientJson || []);
+
+    // keep contacts in sync when project updates
+    React.useEffect(() => {
+        setContacts(project.contacts || project.clientJson || []);
+    }, [project.contacts, project.clientJson]);
 
     const [editData, setEditData] = useState({
         name: project.name,
@@ -27,7 +35,8 @@ export const OverviewTab: React.FC<{ project: any, onUpdate: () => void }> = ({ 
         setSaving(true);
         try {
             // Include ID updates if changed (usually not recommended, but requested by user)
-            const payload = { ...editData };
+            const payload: any = { ...editData };
+            if (contacts) payload.contacts = contacts;
             await api.patch(`projects/${project.id}`, payload);
             setIsEditing(false);
             onUpdate();
@@ -47,6 +56,7 @@ export const OverviewTab: React.FC<{ project: any, onUpdate: () => void }> = ({ 
             budget: project.budget || 0,
             createdBy: project.createdBy || ''
         });
+        setContacts(project.contacts || project.clientJson || []);
         setIsEditing(false);
     };
 
@@ -108,6 +118,16 @@ export const OverviewTab: React.FC<{ project: any, onUpdate: () => void }> = ({ 
                                 <DetailRow icon={<Activity />} label="Status" value={project.status.split('_').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} />
                             </div>
                         )}
+                        {/* contacts section */}
+                        <div className="pt-6">
+                            <h4 className="text-sm font-bold text-text-secondary uppercase tracking-wide mb-2">Client Contacts</h4>
+                            <ClientContactsPanel
+                                contacts={contacts}
+                                isEditing={isEditing}
+                                setContacts={setContacts}
+                                disabled={!isAdmin && isEditing}
+                            />
+                        </div>
                     </div>
                 </Card>
             </div>

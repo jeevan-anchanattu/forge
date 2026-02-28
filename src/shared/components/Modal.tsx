@@ -9,9 +9,11 @@ export interface ModalProps {
     title: string;
     children: React.ReactNode;
     className?: string;
+    zIndex?: number;
+    useFullscreenPortal?: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, zIndex, useFullscreenPortal }) => {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose();
@@ -29,7 +31,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
     if (!isOpen) return null;
 
     return createPortal(
-        <div className="fixed inset-0 z-[9999] bg-bg-primary/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
+        <div
+            className="fixed inset-0 bg-bg-primary/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+            style={{ zIndex: zIndex || 9999 }}
+        >
             <div
                 className={cn(
                     "w-full max-w-md bg-bg-card border border-border-subtle rounded-xl shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-200",
@@ -50,6 +55,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
                 </div>
             </div>
         </div>,
-        document.body
+        (useFullscreenPortal && document.fullscreenElement as HTMLElement) || document.body
     );
 };

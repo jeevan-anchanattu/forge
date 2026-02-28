@@ -1,0 +1,23 @@
+[
+  {
+    "id": "wb_1",
+    "projectId": "proj_1",
+    "orgId": "org_1",
+    "name": "Mechanical Layout v1",
+    "description": "Initial workbook for duct box assembly.",
+    "drawingNumber": "DWG-1001",
+    "drawingRevision": "R0",
+    "status": "draft",
+    "priority": "high",
+    "tags": ["layout", "ductwork"],
+    "aiSummary": "",
+    "createdBy": "user_1",
+    "createdAt": "2024-02-16T09:00:00Z",
+    "updatedAt": "2024-02-16T09:00:00Z",
+    "sectionCount": 0,
+    "openCommentsCount": 0,
+    "revisionCount": 2,
+    "completionPct": 0,
+    "activeRevisionId": "rev_2"
+  }
+]

@@ -1,9 +1,15 @@
+import React from 'react';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet, useRouteError } from 'react-router-dom';
 import { LoginPage } from '@/modules/auth';
 import { OnboardingPage, OrgSettingsPage } from '@/modules/org';
 import { DashboardPage } from '@/modules/dashboard/pages/Dashboard';
 import { ProjectList } from '@/modules/projects/pages/ProjectList';
 import { ProjectDetail } from '@/modules/projects/pages/ProjectDetail';
+import { WorkbooksPage } from '@/modules/workbooks/pages/WorkbooksPage';
+import { WorkbookDetailPage } from '@/modules/workbooks/pages/WorkbookDetailPage';
+import { WorkbookCreatePage } from '@/modules/workbooks/pages/WorkbookCreatePage';
+import { SectionCockpitPage } from '@/modules/sections/pages/SectionCockpitPage';
+import { SectionCreatePage } from '@/modules/sections/pages/SectionCreatePage';
 import { AppShell } from '@/shared/components/layout/AppShell';
 import { useForgeStore } from '@/shared/store';
 
@@ -84,8 +90,24 @@ const router = createBrowserRouter([
                 element: <ProjectDetail />,
             },
             {
-                path: '/workbook/:id',
-                element: <PlaceholderPage title="Mechanical Workbook" />,
+                path: '/projects/:projectId/workbooks',
+                element: <React.Suspense fallback={<div>Loading...</div>}><WorkbooksPage /></React.Suspense>,
+            },
+            {
+                path: '/projects/:projectId/workbooks/new',
+                element: <React.Suspense fallback={<div>Loading...</div>}><WorkbookCreatePage /></React.Suspense>,
+            },
+            {
+                path: '/workbook/:workbookId',
+                element: <React.Suspense fallback={<div>Loading...</div>}><WorkbookDetailPage /></React.Suspense>,
+            },
+            {
+                path: '/workbooks/:workbookId/sections/new',
+                element: <React.Suspense fallback={<div>Loading...</div>}><SectionCreatePage /></React.Suspense>,
+            },
+            {
+                path: '/workbooks/:workbookId/sections/:sectionId',
+                element: <React.Suspense fallback={<div>Loading...</div>}><SectionCockpitPage /></React.Suspense>,
             },
             {
                 path: '/inventory',

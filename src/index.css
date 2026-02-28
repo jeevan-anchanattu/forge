@@ -12,8 +12,20 @@
   .text-glow {
     text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
   }
-  
+
   .glass-panel {
     @apply backdrop-blur-xl bg-bg-card/80 border border-border-subtle;
   }
+
+  /* three-panel cockpit grid from spec 16.1 */
+  .cockpit {
+    display: grid;
+    grid-template-columns: var(--pdf-w, 450px) 1fr var(--ai-w, 320px);
+    min-height: 80vh;
+  }
+}
+
+:root {
+  --pdf-w: 450px;
+  --ai-w: 320px;
 }

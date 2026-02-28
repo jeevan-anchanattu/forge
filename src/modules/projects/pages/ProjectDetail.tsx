@@ -68,6 +68,7 @@ export const ProjectDetail: React.FC = () => {
     const tabs = [
         { id: 'overview', label: 'Overview' },
         { id: 'status', label: 'Status Flow' },
+        { id: 'workbooks', label: 'Workbooks' },
         { id: 'visuals', label: 'Visual Viewer' },
         ...(showManufacturing ? [{ id: 'manufacturing', label: 'Manufacturing' }] : []),
         { id: 'attachments', label: 'Attachments' },
@@ -120,7 +121,13 @@ export const ProjectDetail: React.FC = () => {
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
-                        onClick={() => setActiveTab(tab.id as any)}
+                        onClick={() => {
+                            if (tab.id === 'workbooks' && project?.id) {
+                                navigate(`/projects/${project.id}/workbooks`);
+                            } else {
+                                setActiveTab(tab.id as any);
+                            }
+                        }}
                         className={`px-6 py-3 text-sm font-bold uppercase tracking-widest whitespace-nowrap border-b-2 transition-colors duration-200 ${activeTab === tab.id
                             ? 'border-accent-primary text-accent-primary'
                             : 'border-transparent text-text-tertiary hover:text-text-secondary hover:border-border-subtle'

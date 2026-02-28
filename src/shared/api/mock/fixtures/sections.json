@@ -1,0 +1,93 @@
+[
+  {
+    "id": "sec_1",
+    "workbookId": "wb_1",
+    "pdfUploadId": "upload_1",
+    "name": "Section 1 – Inlet",
+    "sectionType": "assembly",
+    "pageNumber": 5,
+    "boundsJson": {
+      "x": 0.1,
+      "y": 0.2,
+      "width": 0.8,
+      "height": 0.4
+    },
+    "cutoutImageUrl": null,
+    "status": "draft",
+    "assignedTo": "user_2",
+    "aiSummary": "",
+    "sortOrder": 1,
+    "isManual": false,
+    "anomaliesJson": [],
+    "specItems": [
+      {
+        "id": "spec_1",
+        "parameter": "Inner Diameter",
+        "extractedValue": "150.5",
+        "verifiedValue": "150.5",
+        "unit": "mm",
+        "confidence": "high",
+        "boundsJson": {
+          "x": 0.15,
+          "y": 0.25,
+          "w": 0.1,
+          "h": 0.05
+        }
+      },
+      {
+        "id": "spec_2",
+        "parameter": "Wall Thickness",
+        "extractedValue": "2.5",
+        "verifiedValue": "2.4",
+        "unit": "mm",
+        "confidence": "medium",
+        "boundsJson": {
+          "x": 0.45,
+          "y": 0.35,
+          "w": 0.08,
+          "h": 0.04
+        }
+      },
+      {
+        "id": "spec_3",
+        "parameter": "Weld Depth",
+        "extractedValue": "1.2",
+        "verifiedValue": "",
+        "unit": "mm",
+        "confidence": "low",
+        "boundsJson": {
+          "x": 0.7,
+          "y": 0.22,
+          "w": 0.1,
+          "h": 0.05
+        }
+      },
+      {
+        "id": "spec_4",
+        "parameter": "Surface Roughness",
+        "extractedValue": "3.2",
+        "verifiedValue": "3.2",
+        "unit": "Ra",
+        "confidence": "high",
+        "boundsJson": {
+          "x": 0.3,
+          "y": 0.5,
+          "w": 0.12,
+          "h": 0.06
+        }
+      }
+    ],
+    "createdAt": "2024-02-16T09:15:00Z",
+    "updatedAt": "2024-02-16T09:15:00Z"
+  },
+  {
+    "id": "sec_2",
+    "workbookId": "wb_1",
+    "name": "Manual Section – Notes",
+    "status": "draft",
+    "sortOrder": 2,
+    "isManual": true,
+    "createdAt": "2024-02-16T09:20:00Z",
+    "updatedAt": "2024-02-16T09:20:00Z"
+  }
+]

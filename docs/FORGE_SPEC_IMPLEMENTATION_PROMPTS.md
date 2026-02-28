@@ -196,7 +196,7 @@ GET /workbooks/:id/parse/preview → returns sections from sections.json fixture
 
 THREE-PANEL LAYOUT (SPEC 16.1):
 CSS implementation:
-  .cockpit { display: grid; grid-template-columns: var(--pdf-w) 1fr var(--ai-w); height: 100vh; }
+  .cockpit { display: grid; grid-template-columns: var(--pdf-w) 1fr var(--ai-w); height: 80vh; }
   --pdf-w: default 380px, range 48px (collapsed) to 600px
   --ai-w: default 320px, range 0px (hidden) to 480px
 

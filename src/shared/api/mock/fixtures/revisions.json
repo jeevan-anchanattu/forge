@@ -1,0 +1,28 @@
+[
+  {
+    "id": "rev_1",
+    "workbookId": "wb_1",
+    "revisionNumber": "R0",
+    "label": "Initial upload",
+    "description": "Baseline drawing",
+    "type": "major",
+    "isActive": false,
+    "isLocked": false,
+    "isArchived": false,
+    "createdBy": "user_1",
+    "createdAt": "2024-02-16T09:00:00Z"
+  },
+  {
+    "id": "rev_2",
+    "workbookId": "wb_1",
+    "revisionNumber": "R1",
+    "label": "Client revisions",
+    "description": "Added inlet detail",
+    "type": "minor",
+    "isActive": true,
+    "isLocked": false,
+    "isArchived": false,
+    "createdBy": "user_1",
+    "createdAt": "2024-02-17T10:30:00Z"
+  }
+]

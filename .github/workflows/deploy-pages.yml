@@ -51,7 +51,11 @@ jobs:
           VITE_MOCK_DELAY_MS: 400
           VITE_API_BASE_URL: /api/v1/
 
-      # 5. Configure GitHub Pages
+      # 5. Prevent Jekyll from building (avoids duplicate github-pages artifact conflict)
+      - name: Disable Jekyll
+        run: touch ./dist/.nojekyll
+
+      # 6. Configure GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

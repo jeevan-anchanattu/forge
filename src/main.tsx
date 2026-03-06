@@ -10,6 +10,11 @@ async function prepareApp() {
         // Start the worker and return a promise that resolves when it's ready
         return worker.start({
             onUnhandledRequest: 'bypass',
+            serviceWorker: {
+                // Use Vite's BASE_URL so the path is correct both locally (/)
+                // and on GitHub Pages (/forge/). e.g. /forge/mockServiceWorker.js
+                url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
+            },
         });
     }
     return Promise.resolve();

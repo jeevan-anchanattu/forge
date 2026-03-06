@@ -5,21 +5,31 @@ on:
     branches:
       - dev
 
-# Grants the workflow permission to write to the gh-pages branch
+# Required permissions for the native GitHub Pages deployment
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Only allow one concurrent deployment
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     name: Build & Deploy
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       # 1. Check out the repository code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Set up Node.js (matches local dev environment)
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -32,9 +42,8 @@ jobs:
 
       # 4. Build the Vite app
       #    VITE_MOCK_API=true ensures the app uses mock data in the dev environment.
-      #    The vite.config.ts will set base='/forge/' automatically for production builds.
-      #    Note: We use build:ci (vite build only) to skip tsc while pre-existing TS
-      #    errors exist in the codebase. Fix them to switch back to `npm run build`.
+      #    The vite.config.ts sets base='/forge/' automatically for production builds.
+      #    Note: build:ci uses vite build only (skips tsc) due to pre-existing TS errors.
       - name: Build
         run: npm run build:ci
         env:
@@ -42,12 +51,17 @@ jobs:
           VITE_MOCK_DELAY_MS: 400
           VITE_API_BASE_URL: /api/v1/
 
+      # 5. Configure GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-      # 5. Deploy the dist/ folder to the gh-pages branch
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      # 6. Upload the dist/ folder as a Pages artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          # Optional: add a custom commit message for the gh-pages branch
-          commit_message: 'deploy: ${{ github.sha }}'
+          path: ./dist
+
+      # 7. Deploy to GitHub Pages via the native GitHub Actions mechanism
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

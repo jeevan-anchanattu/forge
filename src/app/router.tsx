@@ -128,7 +128,7 @@ const router = createBrowserRouter([
         element: <PlaceholderPage title="404 — Null Reference" />,
     },
 ], {
-    basename: import.meta.env.BASE_URL
+    basename: import.meta.env.BASE_URL.replace(/\/$/, "")
 });
 
 export const AppRouter = () => <RouterProvider router={router} />;

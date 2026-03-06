@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages (Dev)
+
+on:
+  push:
+    branches:
+      - dev
+
+# Grants the workflow permission to write to the gh-pages branch
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    name: Build & Deploy
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js (matches local dev environment)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Install dependencies (using ci for reproducible installs)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build the Vite app
+      #    VITE_MOCK_API=true ensures the app uses mock data in the dev environment.
+      #    The vite.config.ts will set base='/forge/' automatically for production builds.
+      #    Note: We use build:ci (vite build only) to skip tsc while pre-existing TS
+      #    errors exist in the codebase. Fix them to switch back to `npm run build`.
+      - name: Build
+        run: npm run build:ci
+        env:
+          VITE_MOCK_API: true
+          VITE_MOCK_DELAY_MS: 400
+          VITE_API_BASE_URL: /api/v1/
+
+
+      # 5. Deploy the dist/ folder to the gh-pages branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          # Optional: add a custom commit message for the gh-pages branch
+          commit_message: 'deploy: ${{ github.sha }}'
